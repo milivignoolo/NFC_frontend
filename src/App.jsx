@@ -5,6 +5,7 @@ import Users from "./components/Users/Users";
 import Libros from "./components/Libros/Libros";
 import UIDChecker from "./components/UIDChecker/UIDChecker";
 import Computadora from "./components/Computadoras/Computadoras";
+import Operadores from "./components/Operadores/Operadores";
 
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
         {tab === "libros" && <Libros />}
         {tab === "uid" && <UIDChecker />}
         {tab === "computadoras" && <Computadora />}
+        {tab === "operadores" && <Operadores />}
       </main>
     </div>
   );

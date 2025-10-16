@@ -181,7 +181,12 @@ export default function Usuarios() {
 
   // ================= RENDER =================
   return (
+
     <div className="users-container">
+      <h1>
+        <i className="user-titulo"></i>
+        Gestión de Usuarios
+      </h1>
       {/* Mensaje visual */}
       {mensaje && (
         <div className={`mensaje ${tipoMensaje === "ok" ? "mensaje-exito" : "mensaje-error"}`}>

@@ -24,6 +24,7 @@ export default function Tabs({ onSelectTab }) {
           { id: "libros", label: "Libros" },
           { id: "uid", label: "UID Checker" },
           { id: "computadoras", label: "Computadoras" },
+          { id: "operadores", label: "Operadores"},
         ].map((tab) => (
           <button
             key={tab.id}
