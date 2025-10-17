@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { api } from "../../services/api";
+import "./UIDChecker.css";
 
 export default function UIDChecker() {
   const [ultimoUID, setUltimoUID] = useState("");
@@ -36,14 +37,12 @@ export default function UIDChecker() {
     }
   }, []);
 
-  // Copiar UID
   const copiarUID = () => {
     navigator.clipboard.writeText(ultimoUID)
       .then(() => setCopiadoUID(true))
       .catch(() => setCopiadoUID(false));
   };
 
-  // Copiar ID
   const copiarID = () => {
     if (!estadoUID || !estadoUID.info) return;
 
@@ -59,22 +58,20 @@ export default function UIDChecker() {
       .catch(() => setCopiadoID(false));
   };
 
-  const renderInfo = (info) => {
-    return (
-      <ul>
-        {Object.entries(info).map(([key, value]) => (
-          <li key={key}>
-            <strong>{key}:</strong>{" "}
-            {Array.isArray(value)
-              ? value.join(", ")
-              : typeof value === "object" && value !== null
-              ? renderInfo(value)
-              : value || "-"}
-          </li>
-        ))}
-      </ul>
-    );
-  };
+  const renderInfo = (info) => (
+    <ul className="uid-info-list">
+      {Object.entries(info).map(([key, value]) => (
+        <li key={key}>
+          <strong>{key}:</strong>{" "}
+          {Array.isArray(value)
+            ? value.join(", ")
+            : typeof value === "object" && value !== null
+            ? renderInfo(value)
+            : value || "-"}
+        </li>
+      ))}
+    </ul>
+  );
 
   useEffect(() => {
     obtenerYVerificarUID(); 
@@ -87,7 +84,6 @@ export default function UIDChecker() {
       try {
         const data = JSON.parse(event.data);
         if (data.tipo === "lectura_nfc" && data.data?.uid_tarjeta) {
-          console.log("📡 Nuevo UID detectado:", data.data.uid_tarjeta);
           obtenerYVerificarUID(data.data.uid_tarjeta);
         }
       } catch (err) {
@@ -101,43 +97,40 @@ export default function UIDChecker() {
   }, [obtenerYVerificarUID]);
 
   return (
-    <div style={{ padding: "1rem", border: "1px solid #ccc", borderRadius: "8px", maxWidth: "500px" }}>
-      <h2>UID Checker</h2>
+    <div className="uid-container">
+      <h2 className="uid-title">UID Checker</h2>
 
       {cargando ? (
-        <p>Cargando...</p>
+        <p className="uid-loading">Cargando...</p>
       ) : (
         <>
           {ultimoUID ? (
-            <>
-              <p>
+            <div className="uid-content">
+              <p className="uid-last">
                 <strong>Último UID registrado:</strong> {ultimoUID}{" "}
-                <button onClick={copiarUID} style={{ marginLeft: "0.5rem" }}>
+                <button className="uid-btn uid-btn-copy" onClick={copiarUID}>
                   {copiadoUID ? "Copiado ✅" : "Copiar UID"}
                 </button>
               </p>
 
               {estadoUID ? (
-                <div style={{ marginTop: "1rem" }}>
-                  <h3>Detalles del UID:</h3>
+                <div className="uid-details">
+                  <h3 className="uid-subtitle">Detalles del UID:</h3>
                   <p><strong>Tipo:</strong> {estadoUID.tipo}</p>
-
                   {estadoUID.info && renderInfo(estadoUID.info)}
-
-                  {/* Botón copiar ID */}
-                  <button onClick={copiarID}>
+                  <button className="uid-btn uid-btn-copy-id" onClick={copiarID}>
                     {copiadoID ? "ID Copiado ✅" : "Copiar ID"}
                   </button>
                 </div>
               ) : (
-                <p>Estado: Libre</p>
+                <p className="uid-free">Estado: Libre</p>
               )}
-            </>
+            </div>
           ) : (
-            <p>No hay registros de UID.</p>
+            <p className="uid-empty">No hay registros de UID.</p>
           )}
 
-          <button style={{ marginTop: "1rem" }} onClick={() => obtenerYVerificarUID()}>
+          <button className="uid-btn uid-btn-refresh" onClick={() => obtenerYVerificarUID()}>
             Refrescar manualmente
           </button>
         </>

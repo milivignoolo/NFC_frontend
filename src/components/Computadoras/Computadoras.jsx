@@ -155,6 +155,8 @@ export default function Computadoras() {
       <section className="form-section">
         <h3>Registrar nueva computadora</h3>
         <form onSubmit={registrarComputadora}>
+         <div className="form-group"> 
+        <label> Marca </label>
           <input
             type="text"
             name="marca"
@@ -162,6 +164,9 @@ export default function Computadoras() {
             value={nuevaCompu.marca}
             onChange={handleCompuChange}
           />
+          </div>
+          <div className="form-group"> 
+        <label> Marca </label>
           <input
             type="text"
             name="modelo"
@@ -169,6 +174,9 @@ export default function Computadoras() {
             value={nuevaCompu.modelo}
             onChange={handleCompuChange}
           />
+          </div>
+          <div className="form-group"> 
+        <label> Marca </label>
           <input
             type="text"
             name="sistema_operativo"
@@ -176,6 +184,9 @@ export default function Computadoras() {
             value={nuevaCompu.sistema_operativo}
             onChange={handleCompuChange}
           />
+          </div>
+          <div className="form-group"> 
+        <label> Marca </label>
           <input
             type="text"
             name="observacion"
@@ -183,6 +194,9 @@ export default function Computadoras() {
             value={nuevaCompu.observacion}
             onChange={handleCompuChange}
           />
+          </div>
+          <div className="form-group"> 
+        <label> Marca </label>
           <input
             type="text"
             name="uid_tarjeta"
@@ -190,6 +204,7 @@ export default function Computadoras() {
             value={nuevaCompu.uid_tarjeta}
             onChange={handleCompuChange}
           />
+          </div>
           <button type="submit">Registrar</button>
         </form>
       </section>

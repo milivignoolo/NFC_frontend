@@ -1,0 +1,115 @@
+/* ============================= */
+/*      CONTENEDOR PRINCIPAL     */
+/* ============================= */
+.uid-container {
+    max-width: 500px;
+    margin: 2rem auto; /* centra horizontalmente */
+    padding: 1.5rem 2rem;
+    border: 1px solid var(--azul-borde);
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* ============================= */
+  /*            TITULO             */
+  /* ============================= */
+  .uid-title {
+    font-size: 1.8rem;
+    color: var(--azul-principal);
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  /* ============================= */
+  /*        MENSAJES/ESTADOS       */
+  /* ============================= */
+  .uid-loading,
+  .uid-empty,
+  .uid-free {
+    font-style: italic;
+    color: var(--azul-texto);
+    text-align: center;
+  }
+  
+  .uid-content {
+    margin-bottom: 1rem;
+  }
+  
+  .uid-last {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  /* ============================= */
+  /*          DETALLES             */
+  /* ============================= */
+  .uid-details {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--azul-borde);
+    border-radius: 8px;
+    background-color: var(--azul-muy-claro);
+  }
+  
+  .uid-subtitle {
+    margin-bottom: 0.5rem;
+    color: var(--azul-secundario);
+    font-weight: 500;
+  }
+  
+  .uid-info-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .uid-info-list li {
+    margin-bottom: 0.25rem;
+    word-break: break-word;
+  }
+  
+  /* ============================= */
+  /*            BOTONES            */
+  /* ============================= */
+  .uid-btn {
+    padding: 0.4rem 0.8rem;
+    border: 2px solid var(--azul-principal);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-top: 0.3rem;
+    transition: all 0.3s ease;
+    background-color: white;
+    color: var(--azul-principal);
+  }
+  
+  .uid-btn:hover {
+    background-color: var(--azul-muy-claro);
+    border-color: var(--azul-secundario);
+  }
+  
+  .uid-btn-copy,
+  .uid-btn-copy-id {
+    background-color: var(--azul-acento);
+    color: white;
+    border-color: var(--azul-acento);
+  }
+  
+  .uid-btn-copy:hover,
+  .uid-btn-copy-id:hover {
+    background-color: var(--azul-hover);
+    border-color: var(--azul-hover);
+  }
+  
+  .uid-btn-refresh {
+    display: block;
+    margin: 1rem auto 0 auto;
+    width: fit-content;
+  }
+  

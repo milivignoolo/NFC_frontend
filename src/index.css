@@ -1,108 +1,132 @@
+/* ============================= */
+/*       INDEX.CSS GLOBAL        */
+/* ============================= */
+
+/* Importar fuente Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Variables de color */
+:root {
+  --azul-oscuro: #05092e;
+  --azul-principal: #091465;
+  --azul-secundario: #3949ab;
+  --azul-claro: #5c6bc0;
+  --azul-muy-claro: #a2b4e1;
+  --azul-acento: #1976d2;
+  --azul-hover: #1565c0;
+  --azul-borde: #90caf9;
+  --azul-texto: #0d133d;
+  --color-texto: #0d133d;
+}
+
+/* ============================= */
+/*        RESETEO BÁSICO         */
+/* ============================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
-  padding: 2rem;
+html, body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: var(--color-texto);
+  background-color: #f5f6fa; /* fondo neutro claro */
+  line-height: 1.6;
 }
 
-/* Contenedor principal */
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
+a {
+  text-decoration: none;
+  color: var(--azul-acento);
+  transition: color 0.3s ease;
 }
 
-/* Header */
-header {
-  background: white;
-  color: #667eea;
-  padding: 2rem;
-  text-align: center;
-  border-radius: 16px;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+a:hover {
+  color: var(--azul-hover);
 }
 
-header h1 {
-  font-size: 2rem;
+ul, ol {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================= */
+/*       TIPOGRAFÍA GLOBAL       */
+/* ============================= */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--azul-principal);
   font-weight: 700;
-  margin-bottom: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  line-height: 1.2;
+  margin-bottom: 0.5em;
 }
 
-header .subtitle {
-  color: #718093;
-  font-size: 1.2rem;
+p {
+  margin-bottom: 1em;
+  color: var(--azul-texto);
 }
 
-/* Tabs de navegación */
-.tabs {
-  display: flex;
-  justify-content: flex-start;
-  background: white;
-  gap: 1.5rem;
-  padding: 0.5rem;
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.tabs button {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  background: transparent;
-  color: #718093;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.tabs button:hover {
-  background: #f5f6fa;
-}
-
-.tabs button.active {
-  background: #667eea;
-  color: white;
-}
-
-/* Mensajes de error */
-.error {
-  background: #ff6b6b;
-  color: white;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Botones generales */
+/* ============================= */
+/*         BOTONES BASE           */
+/* ============================= */
 button {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--azul-principal);
+  color: white;
+  border: 2px solid var(--azul-principal);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  font-family: inherit;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: var(--azul-hover);
+  border-color: var(--azul-hover);
 }
 
-button:active {
-  transform: translateY(0);
+/* ============================= */
+/*        CONTENEDORES           */
+/* ============================= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
+
+/* ============================= */
+/*      FORMULARIOS BASE          */
+/* ============================= */
+input, textarea, select {
+  font-family: 'Roboto', sans-serif;
+  border: 2px solid var(--azul-borde);
+  border-radius: 8px;
+  padding: 0.5rem;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--azul-acento);
+}
+
+/* ============================= */
+/*       CLASES UTILES            */
+/* ============================= */
+.text-center {
+  text-align: center;
+}
+
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+

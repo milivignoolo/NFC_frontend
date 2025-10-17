@@ -3,7 +3,6 @@ import { api } from "../../services/api";
 import "./Users.css";
 
 export default function Usuarios() {
-  // ================= ESTADOS =================
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -11,9 +10,8 @@ export default function Usuarios() {
   const [activeUsersError, setActiveUsersError] = useState(null);
   const [operadores, setOperadores] = useState([]);
 
-  // Mensajes visuales
   const [mensaje, setMensaje] = useState("");
-  const [tipoMensaje, setTipoMensaje] = useState(""); // "ok" o "error"
+  const [tipoMensaje, setTipoMensaje] = useState("");
 
   const [form, setForm] = useState({
     id_usuario: "",
@@ -31,9 +29,9 @@ export default function Usuarios() {
     legajo: "",
     carreras: [],
     materias: [],
+    uid_tarjeta: "",
   });
 
-  // ================= EFECTOS =================
   useEffect(() => {
     fetchAll();
     fetchOperadores();
@@ -54,7 +52,6 @@ export default function Usuarios() {
     }
   }, [searchTerm, users]);
 
-  // ================= FETCHS =================
   const fetchAll = async () => {
     try {
       const res = await api.getUsers();
@@ -84,7 +81,6 @@ export default function Usuarios() {
     }
   };
 
-  // ================= FORMULARIO =================
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -149,7 +145,6 @@ export default function Usuarios() {
     }
   };
 
-  // ================= FUNCIONES AUX =================
   const mostrarMensaje = (texto, tipo = "ok") => {
     setMensaje(texto);
     setTipoMensaje(tipo);
@@ -176,71 +171,42 @@ export default function Usuarios() {
       legajo: "",
       carreras: [],
       materias: [],
+      uid_tarjeta: "",
     });
   };
 
-  // ================= RENDER =================
   return (
-
     <div className="users-container">
-      <h1>
-        <i className="user-titulo"></i>
-        Gestión de Usuarios
-      </h1>
-      {/* Mensaje visual */}
+      <h1 className="users-title">Gestión de Usuarios</h1>
+
       {mensaje && (
-        <div className={`mensaje ${tipoMensaje === "ok" ? "mensaje-exito" : "mensaje-error"}`}>
+        <div className={`users-message ${tipoMensaje === "ok" ? "users-message-ok" : "users-message-error"}`}>
           {mensaje}
         </div>
       )}
 
-      {/* ---------- FORMULARIO ---------- */}
-      <section className="form-section">
-        <h2>
-          <i className="fa-solid fa-user-plus"></i> Registrar Usuario
-        </h2>
+      <section className="users-form-section">
+        <h2 className="users-form-title">Registrar Usuario</h2>
 
-        <form onSubmit={handleSubmit} className="user-form">
-          {/* UID */} 
-          <div className="form-group"> 
-            <label>UID de Tarjeta</label> 
-            <input name="uid_tarjeta" 
-            value={form.uid_tarjeta} 
-            onChange={handleChange} placeholder="(opcional)" /> 
-            </div>
+        <form onSubmit={handleSubmit} className="users-form">
+          <div className="users-form-group">
+            <label>UID de Tarjeta</label>
+            <input name="uid_tarjeta" value={form.uid_tarjeta} onChange={handleChange} placeholder="(opcional)" />
+          </div>
 
-          {/* DNI */}
-          <div className="form-group">
+          <div className="users-form-group">
             <label>DNI *</label>
-            <input
-              name="id_usuario"
-              value={form.id_usuario}
-              onChange={handleChange}
-              placeholder="Número de documento"
-              required
-            />
+            <input name="id_usuario" value={form.id_usuario} onChange={handleChange} placeholder="Número de documento" required />
           </div>
 
-          {/* Nombre */}
-          <div className="form-group">
+          <div className="users-form-group">
             <label>Nombre completo *</label>
-            <input
-              name="nombre_completo"
-              value={form.nombre_completo}
-              onChange={handleChange}
-              required
-            />
+            <input name="nombre_completo" value={form.nombre_completo} onChange={handleChange} required />
           </div>
 
-          {/* Tipo de usuario */}
-          <div className="form-group">
+          <div className="users-form-group">
             <label>Tipo de usuario *</label>
-            <select
-              name="tipo_usuario"
-              value={form.tipo_usuario}
-              onChange={handleChange}
-              required
-            >
+            <select name="tipo_usuario" value={form.tipo_usuario} onChange={handleChange} required>
               <option value="">Seleccione</option>
               <option value="Aspirante">Aspirante</option>
               <option value="Cursante">Cursante</option>
@@ -251,13 +217,12 @@ export default function Usuarios() {
             </select>
           </div>
 
-          {/* Carreras */}
           {form.tipo_usuario === "Cursante" && (
-            <div className="form-group" style={{ gridColumn: "1 / -1" }}>
+            <div className="users-form-group users-form-full">
               <label>Carreras</label>
-              <div className="checkbox-group">
+              <div className="users-checkbox-group">
                 {["ISI", "IQ", "IE"].map((carrera) => (
-                  <div key={carrera} className="checkbox-item">
+                  <div key={carrera} className="users-checkbox-item">
                     <input
                       type="checkbox"
                       id={`carrera-${carrera}`}
@@ -272,44 +237,37 @@ export default function Usuarios() {
             </div>
           )}
 
-          {/* Email */}
-          <div className="form-group">
+          <div className="users-form-group">
             <label>Email</label>
             <input type="email" name="email" value={form.email} onChange={handleChange} />
           </div>
 
-          {/* Teléfono */}
-          <div className="form-group">
+          <div className="users-form-group">
             <label>Teléfono</label>
             <input name="telefono" value={form.telefono} onChange={handleChange} />
           </div>
 
-          {/* Domicilio */}
-          <div className="form-group">
+          <div className="users-form-group">
             <label>Domicilio</label>
             <input name="domicilio" value={form.domicilio} onChange={handleChange} />
           </div>
 
-          {/* Código postal */}
-          <div className="form-group">
+          <div className="users-form-group">
             <label>Código postal</label>
             <input name="codigo_postal" value={form.codigo_postal} onChange={handleChange} />
           </div>
 
-          {/* Ciudad */}
-          <div className="form-group">
+          <div className="users-form-group">
             <label>Ciudad</label>
             <input name="ciudad" value={form.ciudad} onChange={handleChange} />
           </div>
 
-          {/* Provincia */}
-          <div className="form-group">
+          <div className="users-form-group">
             <label>Provincia</label>
             <input name="provincia" value={form.provincia} onChange={handleChange} />
           </div>
 
-          {/* Sexo */}
-          <div className="form-group">
+          <div className="users-form-group">
             <label>Sexo</label>
             <select name="sexo" value={form.sexo} onChange={handleChange}>
               <option value="">Seleccione</option>
@@ -319,8 +277,7 @@ export default function Usuarios() {
             </select>
           </div>
 
-          {/* Operador */}
-          <div className="form-group">
+          <div className="users-form-group">
             <label>Operador</label>
             <select name="operador" value={form.operador} onChange={handleChange}>
               <option value="">Seleccione operador</option>
@@ -332,33 +289,24 @@ export default function Usuarios() {
             </select>
           </div>
 
-          {/* Contraseña */}
-          <div className="form-group">
+          <div className="users-form-group">
             <label>Contraseña *</label>
-            <input
-              type="password"
-              name="contrasena"
-              value={form.contrasena}
-              onChange={handleChange}
-              required
-            />
+            <input type="password" name="contrasena" value={form.contrasena} onChange={handleChange} required />
           </div>
 
-          {/* Legajo */}
           {(form.tipo_usuario === "Cursante" || form.tipo_usuario === "Docente") && (
-            <div className="form-group">
+            <div className="users-form-group">
               <label>Legajo</label>
               <input name="legajo" value={form.legajo} onChange={handleChange} />
             </div>
           )}
 
-          {/* Materias */}
           {form.tipo_usuario === "Docente" && (
-            <div className="form-group" style={{ gridColumn: "1 / -1" }}>
+            <div className="users-form-group users-form-full">
               <label>Materias</label>
-              <div className="checkbox-group">
+              <div className="users-checkbox-group">
                 {["Programación I", "Base de Datos", "Matemática"].map((materia) => (
-                  <div key={materia} className="checkbox-item">
+                  <div key={materia} className="users-checkbox-item">
                     <input
                       type="checkbox"
                       id={`materia-${materia}`}
@@ -373,20 +321,18 @@ export default function Usuarios() {
             </div>
           )}
 
-          {/* Botones */}
-          <div className="form-actions">
-            <button type="submit" className="btn-submit">
+          <div className="users-form-actions">
+            <button type="submit" className="users-btn-submit">
               Registrar Usuario
             </button>
-            <button type="button" className="btn-clear" onClick={resetForm}>
+            <button type="button" className="users-btn-clear" onClick={resetForm}>
               Limpiar
             </button>
           </div>
         </form>
       </section>
 
-      {/* TABLA */}
-      <section className="table-section">
+      <section className="users-table-section">
         <h2>Usuarios Registrados</h2>
 
         <input
@@ -394,6 +340,7 @@ export default function Usuarios() {
           placeholder="Buscar por nombre o DNI..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          className="users-search-input"
         />
 
         <table className="users-table">
@@ -414,7 +361,9 @@ export default function Usuarios() {
                 <td>{user.tipo_usuario}</td>
                 <td>{user.legajo || "-"}</td>
                 <td>
-                  <button onClick={() => eliminarUsuario(user.id_usuario)}>Eliminar</button>
+                  <button className="users-btn-delete" onClick={() => eliminarUsuario(user.id_usuario)}>
+                    Eliminar
+                  </button>
                 </td>
               </tr>
             ))}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./Tabs.css";
 
 export default function Tabs({ onSelectTab }) {
   const [active, setActive] = useState("dashboard");
@@ -9,32 +10,36 @@ export default function Tabs({ onSelectTab }) {
   };
 
   return (
-    <div className="tabs-container">
-      {/* Header del panel */}
-      <header className="header">
-        <h1>Sistema de Control de Acceso NFC</h1>
-        <p className="subtitle">Panel de monitoreo general</p>
-      </header>
+    <>
+      {/* Contenedor del header */}
+      <div className="tabs-header-container">
+        <header className="tabs-header">
+          <h1 className="tabs-title">Sistema de Control de Acceso NFC</h1>
+          <p className="tabs-subtitle">Panel de monitoreo general</p>
+        </header>
+      </div>
 
-      {/* Navegación de pestañas */}
-      <nav className="tabs">
-        {[
-          { id: "dashboard", label: "Dashboard" },
-          { id: "users", label: "Usuarios" },
-          { id: "libros", label: "Libros" },
-          { id: "uid", label: "UID Checker" },
-          { id: "computadoras", label: "Computadoras" },
-          { id: "operadores", label: "Operadores"},
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            className={active === tab.id ? "active" : ""}
-            onClick={() => handleSelect(tab.id)}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </nav>
-    </div>
+      {/* Contenedor de navegación de pestañas */}
+      <div className="tabs-nav-container">
+        <nav className="tabs-nav">
+          {[
+            { id: "dashboard", label: "Dashboard" },
+            { id: "users", label: "Usuarios" },
+            { id: "libros", label: "Libros" },
+            { id: "uid", label: "UID Checker" },
+            { id: "computadoras", label: "Computadoras" },
+            { id: "operadores", label: "Operadores"},
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              className={`tabs-btn ${active === tab.id ? "tabs-btn-active" : ""}`}
+              onClick={() => handleSelect(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </nav>
+      </div>
+    </>
   );
 }
