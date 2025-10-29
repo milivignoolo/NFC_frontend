@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../services/api";
+import "./Computadoras.css";
 
 export default function Computadoras() {
   const [computadoras, setComputadoras] = useState([]);
@@ -65,12 +66,12 @@ export default function Computadoras() {
     e.preventDefault();
 
     if (!nuevaCompu.marca || !nuevaCompu.modelo) {
-      setMensaje("⚠️ Marca y modelo son obligatorios");
+      setMensaje("Marca y modelo son obligatorios");
       return;
     }
 
     await api.createComputadora(nuevaCompu);
-    setMensaje("✅ Computadora registrada correctamente");
+    setMensaje("Computadora registrada correctamente");
     setNuevaCompu({
       marca: "",
       modelo: "",
@@ -85,7 +86,7 @@ export default function Computadoras() {
   const eliminarComputadora = async (id) => {
     if (window.confirm("¿Seguro que deseas eliminar esta computadora?")) {
       await api.deleteComputadora(id);
-      setMensaje("🗑️ Computadora eliminada");
+      setMensaje("Computadora eliminada");
       cargarComputadoras();
     }
   };
@@ -101,7 +102,7 @@ export default function Computadoras() {
     e.preventDefault();
 
     if (!nuevoPrestamo.id_usuario || !nuevoPrestamo.uid_tarjeta) {
-      setMensaje("⚠️ Seleccioná un usuario y una computadora");
+      setMensaje("Seleccioná un usuario y una computadora");
       return;
     }
 
@@ -111,12 +112,12 @@ export default function Computadoras() {
     );
 
     if (!compu) {
-      setMensaje("❌ No existe una computadora con ese UID");
+      setMensaje("No existe una computadora con ese UID");
       return;
     }
 
     if (compu.estado === "en_uso") {
-      setMensaje("⚠️ Esta computadora ya está en uso");
+      setMensaje("Esta computadora ya está en uso");
       return;
     }
 
@@ -129,7 +130,7 @@ export default function Computadoras() {
     };
 
     await api.createPrestamoComputadora(data);
-    setMensaje("💻 Préstamo registrado correctamente");
+    setMensaje("Préstamo registrado correctamente");
     setNuevoPrestamo({ id_usuario: "", uid_tarjeta: "", operador: "" });
     cargarPrestamos();
     cargarComputadoras();
@@ -138,7 +139,7 @@ export default function Computadoras() {
   const finalizarPrestamo = async (id) => {
     const hora_fin = new Date().toLocaleTimeString();
     await api.finalizarPrestamoComputadora(id, hora_fin);
-    setMensaje("✅ Préstamo finalizado");
+    setMensaje("Préstamo finalizado");
     cargarPrestamos();
     cargarComputadoras();
   };
@@ -148,7 +149,7 @@ export default function Computadoras() {
   // =======================
   return (
     <div className="computadoras-container">
-      <h2>💻 Gestión de Computadoras</h2>
+      <h2>Gestión de Computadoras</h2>
       {mensaje && <p className="mensaje">{mensaje}</p>}
 
       {/* FORM NUEVA COMPUTADORA */}
@@ -160,59 +161,58 @@ export default function Computadoras() {
           <input
             type="text"
             name="marca"
-            placeholder="Marca *"
-            value={nuevaCompu.marca}
+            placeholder="Ejemplo: HP, Lenovo, Dell..."
             onChange={handleCompuChange}
           />
           </div>
           <div className="form-group"> 
-        <label> Marca </label>
+        <label> Modelo </label>
           <input
             type="text"
             name="modelo"
-            placeholder="Modelo *"
+             placeholder="Ejemplo: Pavilion 15, ThinkPad T14, Aspire 3..."
             value={nuevaCompu.modelo}
             onChange={handleCompuChange}
           />
           </div>
           <div className="form-group"> 
-        <label> Marca </label>
+        <label> Sistema operativo </label>
           <input
             type="text"
             name="sistema_operativo"
-            placeholder="Sistema Operativo"
+            placeholder="Ejemplo: Windows 10, Ubuntu 22.04, macOS Ventura..."
             value={nuevaCompu.sistema_operativo}
             onChange={handleCompuChange}
           />
           </div>
           <div className="form-group"> 
-        <label> Marca </label>
+        <label> Observaciones </label>
           <input
             type="text"
             name="observacion"
-            placeholder="Observaciones"
+            placeholder="Notas sobre estado físico, mantenimiento o accesorios" 
             value={nuevaCompu.observacion}
             onChange={handleCompuChange}
           />
           </div>
           <div className="form-group"> 
-        <label> Marca </label>
+        <label> UID tarjeta </label>
           <input
             type="text"
             name="uid_tarjeta"
-            placeholder="UID Tarjeta (opcional)"
+            placeholder="Ej: 0011223344"
             value={nuevaCompu.uid_tarjeta}
             onChange={handleCompuChange}
           />
           </div>
-          <button type="submit">Registrar</button>
+          <button type="submit" className="computadoras-btn computadoras-btn-submit">Registrar</button>
         </form>
       </section>
 
       {/* TABLA COMPUTADORAS */}
-      <section className="tabla-section">
-        <h3>Computadoras registradas</h3>
-        <table>
+      <section className="computadoras-tabla-section">
+    <h3 className="computadoras-tabla-title">Computadoras registradas</h3>
+    <table className="computadoras-tabla">
           <thead>
             <tr>
               <th>ID</th>
@@ -234,8 +234,8 @@ export default function Computadoras() {
                 <td>{c.uid_tarjeta || "-"}</td>
                 <td>{c.estado}</td>
                 <td>
-                  <button onClick={() => eliminarComputadora(c.id_computadora)}>
-                    🗑️
+                  <button onClick={() => eliminarComputadora(c.id_computadora)} className="computadoras-btn computadoras-btn-delete">
+                    Eliminar
                   </button>
                 </td>
               </tr>
@@ -251,7 +251,7 @@ export default function Computadoras() {
           {/* USUARIO */}
           <div className="form-group">
             <label>
-              <i className="fa-solid fa-user"></i> Usuario (DNI) *
+              <i className="fa-solid fa-user"></i> Usuario (DNI)
             </label>
             <select
               value={nuevoPrestamo.id_usuario}
@@ -275,7 +275,7 @@ export default function Computadoras() {
           {/* COMPUTADORA */}
           <div className="form-group">
             <label>
-              <i className="fa-solid fa-laptop"></i> Computadora (UID) *
+              <i className="fa-solid fa-laptop"></i> Computadora (UID)
             </label>
             <select
               value={nuevoPrestamo.uid_tarjeta}
@@ -321,14 +321,16 @@ export default function Computadoras() {
             </select>
           </div>
 
-          <button type="submit">Registrar préstamo</button>
+          <button type="submit" className="computadoras-btn computadoras-btn-submit">
+            Registrar préstamo
+          </button>
         </form>
       </section>
 
       {/* TABLA PRÉSTAMOS */}
       <section className="tabla-section">
         <h3>Préstamos activos</h3>
-        <table>
+        <table className="computadoras-tabla">
           <thead>
             <tr>
               <th>ID</th>
@@ -351,7 +353,10 @@ export default function Computadoras() {
                 <td>{p.estado}</td>
                 <td>
                   {p.estado !== "finalizado" && (
-                    <button onClick={() => finalizarPrestamo(p.id_prestamo_compu)}>
+                    <button
+                      className="computadoras-btn computadoras-btn-submit"
+                      onClick={() => finalizarPrestamo(p.id_prestamo_compu)}
+                    >
                       Finalizar
                     </button>
                   )}

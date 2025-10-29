@@ -2,59 +2,85 @@
 /*        CONTENEDOR HEADER      */
 /* ============================= */
 .tabs-header-container {
-    max-width: 900px;
-    margin: 2rem auto 1rem auto; /* centrado horizontal con margen superior */
-    text-align: center;
+  max-width: 900px;
+  margin: 2rem auto 1rem auto;
+  text-align: center;
+}
 
-  }
-  
-  
-  .tabs-title {
-    font-size: 1.8rem;
-    color: var(--azul-principal);
-    margin-bottom: 0.3rem;
-  }
-  
-  .tabs-subtitle {
-    font-size: 1rem;
-    color: var(--azul-texto);
-  }
-  
-  /* ============================= */
-  /*        CONTENEDOR TABS        */
-  /* ============================= */
-  .tabs-nav-container {
-    max-width: 900px;
-    margin:2rem auto 2rem auto; /* centrado horizontal con margen inferior */
-    display: flex;
-    justify-content: center;
-  }
-  
-  .tabs-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-  
-  .tabs-btn {
-    padding: 0.5rem 1rem;
-    border: 2px solid var(--azul-principal);
-    border-radius: 8px;
-    background-color: white;
-    color: var(--azul-principal);
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .tabs-btn:hover {
-    background-color: var(--azul-muy-claro);
-    border-color: var(--azul-acento);
-  }
-  
-  .tabs-btn-active {
-    background-color: var(--azul-acento);
-    color: white;
-    border-color: var(--azul-acento);
-  }
-  
+.tabs-title {
+  font-size: 2rem;
+  color: var(--azul-principal);
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.tabs-subtitle {
+  font-size: 1rem;
+  color: var(--azul-texto);
+}
+
+/* ============================= */
+/*        CONTENEDOR TABS        */
+/* ============================= */
+.tabs-nav-container {
+  max-width: 900px;
+  margin: 2rem auto 2rem auto;
+  display: flex;
+  justify-content: center;
+}
+
+.tabs-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ============================= */
+/*          BOTONES TAB           */
+/* ============================= */
+.tabs-btn {
+  padding: 0.6rem 1.2rem;
+  border: 2px solid var(--azul-principal);
+  border-radius: 12px;
+  background-color: white;
+  color: var(--azul-principal);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.tabs-btn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(25, 118, 210, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.tabs-btn:hover::after {
+  width: 200%;
+  height: 500%;
+}
+
+.tabs-btn:hover {
+  background-color: var(--azul-muy-claro);
+  border-color: var(--azul-acento);
+}
+
+/* ============================= */
+/*       TAB ACTIVO              */
+/* ============================= */
+.tabs-btn-active {
+  background-color: var(--azul-acento);
+  color: white;
+  border-color: var(--azul-acento);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}

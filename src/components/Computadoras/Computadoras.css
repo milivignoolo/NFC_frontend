@@ -1,0 +1,177 @@
+/* ============================= */
+/*         CONTENEDOR            */
+/* ============================= */
+.computadoras-container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* ============================= */
+  /*         TÍTULOS               */
+  /* ============================= */
+  .computadoras-container h2 {
+    font-size: 2rem;
+    color: var(--azul-principal);
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .computadoras-container h3 {
+    font-size: 1.4rem;
+    color: var(--azul-secundario);
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--azul-acento);
+    padding-left: 0.5rem;
+  }
+  
+  /* ============================= */
+  /*        MENSAJES               */
+  /* ============================= */
+  .computadoras-mensaje {
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 500;
+  }
+  
+  .computadoras-mensaje-ok {
+    background-color: #c8e6c9;
+    color: #1b5e20;
+    border: 1px solid #81c784;
+  }
+  
+  .computadoras-mensaje-error {
+    background-color: #ffcdd2;
+    color: #b71c1c;
+    border: 1px solid #ef5350;
+  }
+  
+  /* ============================= */
+  /*          FORMULARIO           */
+  /* ============================= */
+  .computadoras-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .computadoras-form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .computadoras-form-group label {
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: var(--azul-principal);
+  }
+  
+  .computadoras-form-group input,
+  .computadoras-form-group select {
+    border: 2px solid var(--azul-borde);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.95rem;
+    background-color: #fff;
+    color: var(--color-texto);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .computadoras-form-group input:focus,
+  .computadoras-form-group select:focus {
+    border-color: var(--azul-acento);
+    box-shadow: 0 0 4px rgba(25, 118, 210, 0.3);
+  }
+  
+  /* ============================= */
+  /*         BOTONES               */
+  /* ============================= */
+  .computadoras-btn {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .computadoras-btn-submit {
+    background-color: var(--azul-acento);
+    color: white;
+  }
+  
+  .computadoras-btn-submit:hover {
+    background-color: var(--azul-hover);
+  }
+  
+  .computadoras-btn-clear {
+    background-color: white;
+    color: var(--azul-acento);
+    border: 2px solid var(--azul-acento);
+  }
+  
+  .computadoras-btn-clear:hover {
+    background-color: var(--azul-muy-claro);
+  }
+  
+  .computadoras-btn-delete {
+    background-color: #e53935;
+    color: white;
+  }
+  
+  .computadoras-btn-delete:hover {
+    background-color: #c62828;
+  }
+  
+  /* ============================= */
+  /*          TABLA                */
+  /* ============================= */
+  .computadoras-tabla-section,
+  .computadoras-tabla-section-pr {
+    margin-top: 2rem;
+  }
+  
+  .computadoras-tabla,
+  .computadoras-tabla-pr {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .computadoras-tabla th,
+  .computadoras-tabla td,
+  .computadoras-tabla-pr th,
+  .computadoras-tabla-pr td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+  
+  .computadoras-tabla th,
+  .computadoras-tabla-pr th {
+    background-color: var(--azul-principal);
+    color: white;
+    font-weight: 600;
+  }
+  
+  .computadoras-tabla tr:nth-child(even),
+  .computadoras-tabla-pr tr:nth-child(even) {
+    background-color: #f8f9fc;
+  }
+  
+  .computadoras-tabla tr:hover,
+  .computadoras-tabla-pr tr:hover {
+    background-color: var(--azul-muy-claro);
+    transition: background-color 0.3s ease;
+  }
+  

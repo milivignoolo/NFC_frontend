@@ -1,45 +1,64 @@
-/* =============================== */
-/*        CONTENEDOR PRINCIPAL     */
-/* =============================== */
-.libros-container {
+/**************************************
+ *  CONTENEDOR PRINCIPAL
+ **************************************/
+ .libros-container {
   max-width: 1100px;
   margin: 2rem auto;
-  padding: 1rem;
-  font-family: Arial, sans-serif;
-  color: #333;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+/**************************************
+ *  TÍTULOS
+ **************************************/
 .libros-title {
   font-size: 2rem;
-  margin-bottom: 1.5rem;
+  color: var(--azul-principal);
   text-align: center;
-}
-
-/* =============================== */
-/*        SECCIONES GENERALES      */
-/* =============================== */
-.libros-section {
   margin-bottom: 2rem;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  padding: 1rem;
-  background-color: #f9f9f9;
 }
 
 .libros-section-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
+  color: var(--azul-secundario);
   margin-bottom: 1rem;
-  color: #444;
+  border-left: 4px solid var(--azul-acento);
+  padding-left: 0.5rem;
 }
 
-/* =============================== */
-/*            FORMULARIOS          */
-/* =============================== */
+/**************************************
+ *  MENSAJES
+ **************************************/
+.libros-message {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.libros-message-ok {
+  background-color: #c8e6c9;
+  color: #1b5e20;
+  border: 1px solid #81c784;
+}
+
+.libros-message-error {
+  background-color: #ffcdd2;
+  color: #b71c1c;
+  border: 1px solid #ef5350;
+}
+
+/**************************************
+ *  FORMULARIO
+ **************************************/
 .libros-form {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
 }
 
 .libros-form-group {
@@ -47,34 +66,38 @@
   flex-direction: column;
 }
 
-.libros-form-group.full-width {
+.libros-form-full {
   grid-column: 1 / -1;
 }
 
 .libros-form-group label {
-  margin-bottom: 0.25rem;
-  font-weight: 500;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: var(--azul-principal);
 }
 
 .libros-form-group input,
 .libros-form-group select,
 .libros-form-group textarea {
-  padding: 0.5rem;
-  border: 2px solid #ccc;
+  border: 2px solid var(--azul-borde);
   border-radius: 8px;
-  outline: none;
-  transition: border-color 0.3s ease;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  background-color: #fff;
+  color: var(--color-texto);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .libros-form-group input:focus,
 .libros-form-group select:focus,
 .libros-form-group textarea:focus {
-  border-color: #667eea;
+  border-color: var(--azul-acento);
+  box-shadow: 0 0 4px rgba(25, 118, 210, 0.3);
 }
 
-/* =============================== */
-/*         BOTONES                 */
-/* =============================== */
+/**************************************
+ *  BOTONES
+ **************************************/
 .libros-form-actions {
   grid-column: 1 / -1;
   display: flex;
@@ -82,91 +105,129 @@
   gap: 1rem;
 }
 
-.libros-btn,
 .libros-btn-submit,
+.libros-btn-clear,
 .libros-btn-devolver {
-  padding: 0.5rem 1rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  border: 2px solid transparent;
   border-radius: 8px;
-  border: none;
+  padding: 0.6rem 1.2rem;
   cursor: pointer;
-  font-weight: bold;
   transition: all 0.3s ease;
 }
 
-.libros-btn {
-  background-color: #667eea;
-  color: #fff;
-}
-
+/* Botón principal (Guardar / Enviar) */
 .libros-btn-submit {
-  background-color: #28a745;
-  color: #fff;
+  background-color: var(--azul-acento);
+  color: white;
+}
+.libros-btn-submit:hover {
+  background-color: var(--azul-hover);
 }
 
+/* Botón secundario (Limpiar / Cancelar) */
+.libros-btn-clear {
+  background-color: white;
+  color: var(--azul-acento);
+  border: 2px solid var(--azul-acento);
+}
+.libros-btn-clear:hover {
+  background-color: var(--azul-muy-claro);
+}
+
+/* Botón rojo (Eliminar / Devolver libro) */
 .libros-btn-devolver {
-  background-color: #dc3545;
-  color: #fff;
+  background-color: #e53935;
+  color: white;
 }
-
-.libros-btn:hover,
-.libros-btn-submit:hover,
 .libros-btn-devolver:hover {
-  opacity: 0.9;
+  background-color: #c62828;
 }
 
-/* =============================== */
-/*          TABLAS                 */
-/* =============================== */
-.libros-table-wrapper {
-  overflow-x: auto;
+/**************************************
+ *  BUSCADOR
+ **************************************/
+.libros-buscador {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.libros-buscador input {
+  flex: 1;
+  min-width: 250px;
+  padding: 0.6rem 1rem;
+  border: 2px solid var(--azul-borde);
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+.libros-buscador input:focus {
+  border-color: var(--azul-acento);
+}
+
+/**************************************
+ *  TABLA
+ **************************************/
+.libros-table-section {
+  margin-top: 2rem;
 }
 
 .libros-table {
   width: 100%;
   border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .libros-table th,
 .libros-table td {
-  padding: 0.75rem;
-  border: 1px solid #ccc;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
   text-align: left;
+  font-size: 0.95rem;
 }
 
 .libros-table th {
-  background-color: #667eea;
-  color: #fff;
+  background-color: var(--azul-principal);
+  color: white;
+  font-weight: 600;
 }
 
 .libros-table tr:nth-child(even) {
-  background-color: #f0f0f0;
+  background-color: #f8f9fc;
 }
 
 .libros-table tr:hover {
-  background-color: #e0e7ff;
+  background-color: var(--azul-muy-claro);
+  transition: background-color 0.3s ease;
 }
 
-/* =============================== */
-/*          STATUS Y BADGES        */
-/* =============================== */
+/**************************************
+ *  ESTADOS / BADGES
+ **************************************/
 .libros-status {
-  padding: 0.2rem 0.5rem;
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
   border-radius: 6px;
-  color: #fff;
+  font-weight: 600;
   font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #fff;
 }
 
-.libros-status-libre { background-color: #28a745; }
-.libros-status-en_prestamo { background-color: #ffc107; color: #000; }
-.libros-status-reservado { background-color: #dc3545; }
-
-.libros-badge {
-  padding: 0.2rem 0.5rem;
-  border-radius: 6px;
-  background-color: #6c757d;
-  color: #fff;
-  font-size: 0.8rem;
+.libros-status-libre {
+  background-color: #2e7d32;
 }
 
-.libros-dias.vencido { color: #dc3545; font-weight: bold; }
-.libros-dias.proximo { color: #ffc107; font-weight: bold; }
+.libros-status-en_prestamo {
+  background-color: #fbc02d;
+  color: #222;
+}
+
+.libros-status-reservado {
+  background-color: #c62828;
+}
