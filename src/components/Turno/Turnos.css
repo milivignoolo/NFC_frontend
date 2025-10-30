@@ -1,0 +1,112 @@
+/* ============================= */
+/*         CONTENEDOR BASE       */
+/* ============================= */
+.turnos-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: "Segoe UI", Roboto, sans-serif;
+  }
+  
+  .turnos-container h2 {
+    text-align: center;
+    color: #004080;
+    margin-bottom: 20px;
+  }
+  
+  /* ============================= */
+  /*         BOTÓN REFRESCAR       */
+  /* ============================= */
+  .refrescar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    margin-bottom: 15px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .refrescar-btn:hover {
+    background-color: #004d99;
+  }
+  
+  /* ============================= */
+  /*             TABLA             */
+  /* ============================= */
+  .turnos-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .turnos-table th,
+  .turnos-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .turnos-table th {
+    background-color: #004080;
+    color: white;
+    font-weight: 600;
+  }
+  
+  .turnos-table tr:nth-child(even) {
+    background-color: #f8f8f8;
+  }
+  
+  /* ============================= */
+  /*          ETIQUETAS ESTADO     */
+  /* ============================= */
+  .estado {
+    display: inline-block;
+    color: #fff;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.9rem;
+    text-transform: capitalize;
+  }
+  
+  .estado.pendiente {
+    background-color: #f0ad4e;
+  }
+  
+  .estado.ingreso {
+    background-color: #5bc0de;
+  }
+  
+  .estado.finalizado {
+    background-color: #5cb85c;
+  }
+  
+  .estado.perdido {
+    background-color: #d9534f;
+  }
+  
+  /* ============================= */
+  /*         BOTONES ACCIONES      */
+  /* ============================= */
+  .accion-btn {
+    padding: 6px 10px;
+    background-color: #5bc0de;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .accion-btn:hover {
+    background-color: #31b0d5;
+  }
+  

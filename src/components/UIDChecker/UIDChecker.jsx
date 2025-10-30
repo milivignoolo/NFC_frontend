@@ -78,7 +78,7 @@ export default function UIDChecker() {
 
     const ws = new WebSocket("ws://localhost:3000");
 
-    ws.onopen = () => console.log("✅ Conectado al servidor WebSocket");
+    ws.onopen = () => console.log("Conectado al servidor WebSocket");
 
     ws.onmessage = (event) => {
       try {
@@ -91,7 +91,7 @@ export default function UIDChecker() {
       }
     };
 
-    ws.onclose = () => console.log("⚠️ Conexión WebSocket cerrada");
+    ws.onclose = () => console.log("Conexión WebSocket cerrada");
 
     return () => ws.close();
   }, [obtenerYVerificarUID]);
@@ -109,7 +109,7 @@ export default function UIDChecker() {
               <p className="uid-last">
                 <strong>Último UID registrado:</strong> {ultimoUID}{" "}
                 <button className="uid-btn uid-btn-copy" onClick={copiarUID}>
-                  {copiadoUID ? "Copiado ✅" : "Copiar UID"}
+                  {copiadoUID ? "Copiado" : "Copiar UID"}
                 </button>
               </p>
 
@@ -119,7 +119,7 @@ export default function UIDChecker() {
                   <p><strong>Tipo:</strong> {estadoUID.tipo}</p>
                   {estadoUID.info && renderInfo(estadoUID.info)}
                   <button className="uid-btn uid-btn-copy-id" onClick={copiarID}>
-                    {copiadoID ? "ID Copiado ✅" : "Copiar ID"}
+                    {copiadoID ? "ID Copiado" : "Copiar ID"}
                   </button>
                 </div>
               ) : (

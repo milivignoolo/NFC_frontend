@@ -282,8 +282,8 @@ export default function Usuarios() {
             <select name="operador" value={form.operador} onChange={handleChange}>
               <option value="">Seleccione un operador</option>
               {operadores.map((op) => (
-                <option key={op.id_operador} value={op.nombre}>
-                  {op.nombre}
+                <option key={op.id_operador} value={op.id_operador}>
+                  {op.nombre_completo}
                 </option>
               ))}
             </select>

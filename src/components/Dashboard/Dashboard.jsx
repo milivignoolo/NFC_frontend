@@ -32,7 +32,7 @@ export default function Dashboard() {
       if (showLoading) setLoading(true);
       setError(null);
 
-      console.log("🔄 Cargando datos del dashboard...");
+      console.log("Cargando datos del dashboard...");
 
       // === Traer datos básicos que sabemos que funcionan ===
       const [usuariosRes, librosRes, prestamosCompuRes] = await Promise.all([
@@ -101,7 +101,7 @@ export default function Dashboard() {
       });
 
       setAccesos(accesosDetalle);
-      console.log("✅ Datos del dashboard cargados correctamente");
+      console.log("Datos del dashboard cargados correctamente");
 
     } catch (err) {
       console.error("Error crítico al cargar estadísticas:", err);
@@ -134,31 +134,31 @@ export default function Dashboard() {
           {/* === TARJETAS DE ESTADÍSTICAS === */}
           <div className="stats-grid">
             <div className="stat-card">
-              <h3>👥 Usuarios</h3>
+              <h3>Usuarios</h3>
               <p>{stats.totalUsuarios}</p>
             </div>
             <div className="stat-card">
-              <h3>🎫 Tarjetas</h3>
+              <h3>Tarjetas</h3>
               <p>{stats.totalTarjetas}</p>
             </div>
             <div className="stat-card">
-              <h3>🚪 Accesos Hoy</h3>
+              <h3>Accesos Hoy</h3>
               <p>{stats.accesosHoy}</p>
             </div>
             <div className="stat-card">
-              <h3>🏠 Personas Dentro</h3>
+              <h3>Personas Dentro</h3>
               <p>{stats.personasDentro}</p>
             </div>
             <div className="stat-card">
-              <h3>📚 Libros en Préstamo</h3>
+              <h3>Libros en Préstamo</h3>
               <p>{stats.librosPrestados}</p>
             </div>
             <div className="stat-card">
-              <h3>💻 Computadoras Prestadas</h3>
+              <h3>Computadoras Prestadas</h3>
               <p>{stats.computadorasPrestadas}</p>
             </div>
             <div className="stat-card wide">
-              <h3>⏰ Última Actividad</h3>
+              <h3>Última Actividad</h3>
               <p>{stats.ultimaActividad}</p>
             </div>
           </div>

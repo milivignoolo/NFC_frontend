@@ -6,6 +6,7 @@ import Libros from "./components/Libros/Libros";
 import UIDChecker from "./components/UIDChecker/UIDChecker";
 import Computadora from "./components/Computadoras/Computadoras";
 import Operadores from "./components/Operadores/Operadores";
+import Turnos from "./components/Turno/Turno";
 
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
         {tab === "uid" && <UIDChecker />}
         {tab === "computadoras" && <Computadora />}
         {tab === "operadores" && <Operadores />}
+        {tab === "turnos" && <Turnos />}
       </main>
     </div>
   );
