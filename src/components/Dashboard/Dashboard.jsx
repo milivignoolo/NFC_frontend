@@ -17,33 +17,14 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // ==========================
-  // FUNCIONES DE DATOS
-  // ==========================
-  const calcularPersonasDentro = (turnos) => {
-    const movimientosPorUsuario = {};
-
-    // Ordenar por fecha + hora
-    const ordenados = [...turnos].sort((a, b) => {
-      const fechaA = `${a.fecha} ${a.hora}`;
-      const fechaB = `${b.fecha} ${b.hora}`;
-      return fechaA.localeCompare(fechaB);
-    });
-
-    // Guardar último movimiento de cada usuario
-    for (const mov of ordenados) {
-      movimientosPorUsuario[mov.id_usuario] = mov.movimiento;
-    }
-
-    return Object.values(movimientosPorUsuario).filter(
-      (m) => m === "entrada"
-    ).length;
-  };
-
   const formatDateTime = (fecha, hora) => {
     if (!fecha || !hora) return "-";
-    const date = new Date(`${fecha}T${hora}`);
-    return date.toLocaleString("es-AR");
+    try {
+      const date = new Date(`${fecha}T${hora}`);
+      return date.toLocaleString("es-AR");
+    } catch (e) {
+      return `${fecha} ${hora}`;
+    }
   };
 
   const fetchDashboardData = async (showLoading = false) => {
@@ -51,107 +32,133 @@ export default function Dashboard() {
       if (showLoading) setLoading(true);
       setError(null);
 
-      // === Traer datos ===
-      const [usuariosRes, turnosRes, librosRes, prestamosCompuRes] =
-        await Promise.all([
-          api.getUsers(),
-          api.getTurnos(),
-          api.getLibros(),
-          api.getPrestamosComputadora(),
-        ]);
+      console.log("🔄 Cargando datos del dashboard...");
+
+      // === Traer datos básicos que sabemos que funcionan ===
+      const [usuariosRes, librosRes, prestamosCompuRes] = await Promise.all([
+        api.getUsers().catch(err => {
+          console.warn("Error cargando usuarios:", err);
+          return { data: [] };
+        }),
+        api.getLibros().catch(err => {
+          console.warn("Error cargando libros:", err);
+          return { data: [] };
+        }),
+        api.getPrestamosComputadora().catch(err => {
+          console.warn("Error cargando préstamos computadoras:", err);
+          return { data: [] };
+        })
+      ]);
 
       const usuarios = usuariosRes.data || [];
-      const turnos = turnosRes.data || [];
       const libros = librosRes.data || [];
       const prestamosCompu = prestamosCompuRes.data || [];
 
-      const totalUsuarios = usuarios.length;
-      const totalTarjetas = usuarios.filter((u) => u.uid_tarjeta).length;
+      // === Intentar cargar datos del dashboard (pueden fallar si los endpoints no existen) ===
+      let accesosHoy = 0;
+      let personasDentro = 0;
+      let ultimaActividadData = null;
+      let accesosDetalle = [];
 
-      const hoy = new Date().toISOString().split("T")[0];
-      const accesosHoy = turnos.filter((t) => t.fecha?.startsWith(hoy));
+      try {
+        const [accesosHoyRes, personasDentroRes, ultimaActividadRes, accesosDetalleRes] = await Promise.all([
+          api.getAccesosHoy().catch(err => {
+            console.warn("Endpoint accesos-hoy no disponible:", err);
+            return { data: { accesosHoy: 0 } };
+          }),
+          api.getPersonasDentro().catch(err => {
+            console.warn("Endpoint personas-dentro no disponible:", err);
+            return { data: { personasDentro: 0 } };
+          }),
+          api.getUltimaActividad().catch(err => {
+            console.warn("Endpoint ultima-actividad no disponible:", err);
+            return { data: null };
+          }),
+          api.getAccesosHoyDetalle().catch(err => {
+            console.warn("Endpoint accesos-hoy-detalle no disponible:", err);
+            return { data: [] };
+          })
+        ]);
 
-      const personasDentro = calcularPersonasDentro(turnos);
-      const ultimaActividad =
-        accesosHoy.length > 0
-          ? accesosHoy[accesosHoy.length - 1].hora
-          : "-";
-
-      const librosPrestados = libros.filter(
-        (l) => l.estado === "en_prestamo"
-      ).length;
-
-      const computadorasPrestadas = prestamosCompu.filter(
-        (p) => !p.hora_fin
-      ).length;
+        accesosHoy = accesosHoyRes.data?.accesosHoy || 0;
+        personasDentro = personasDentroRes.data?.personasDentro || 0;
+        ultimaActividadData = ultimaActividadRes.data;
+        accesosDetalle = accesosDetalleRes.data || [];
+      } catch (dashboardError) {
+        console.warn("Algunos endpoints del dashboard no están disponibles");
+      }
 
       setStats({
-        totalUsuarios,
-        totalTarjetas,
-        accesosHoy: accesosHoy.length,
+        totalUsuarios: usuarios.length,
+        totalTarjetas: usuarios.filter((u) => u.uid_tarjeta).length,
+        accesosHoy,
         personasDentro,
-        ultimaActividad: formatDateTime(hoy, ultimaActividad),
-        librosPrestados,
-        computadorasPrestadas,
+        ultimaActividad: ultimaActividadData 
+          ? formatDateTime(ultimaActividadData.fecha, ultimaActividadData.hora)
+          : "-",
+        librosPrestados: libros.filter(l => l.estado === "en_prestamo").length,
+        computadorasPrestadas: prestamosCompu.filter(p => p.estado === 'en_proceso').length,
       });
 
-      setAccesos([...accesosHoy].reverse());
+      setAccesos(accesosDetalle);
+      console.log("✅ Datos del dashboard cargados correctamente");
+
     } catch (err) {
-      console.error("Error al cargar estadísticas:", err);
-      setError("Error al cargar datos del panel");
+      console.error("Error crítico al cargar estadísticas:", err);
+      setError("Error al cargar datos del panel: " + (err.message || "Error desconocido"));
     } finally {
       if (showLoading) setLoading(false);
     }
   };
 
-  // ==========================
-  // CARGA INICIAL + POLLING
-  // ==========================
   useEffect(() => {
     fetchDashboardData(true);
-    const interval = setInterval(() => fetchDashboardData(false), 3000);
+    const interval = setInterval(() => fetchDashboardData(false), 10000); // Cada 10 segundos
     return () => clearInterval(interval);
   }, []);
 
-  // ==========================
-  // RENDER
-  // ==========================
   return (
     <div className="dashboard">
-      {error && <div className="error">{error}</div>}
+      {error && (
+        <div className="error">
+          <strong>Error:</strong> {error}
+          <br />
+          <small>Algunos endpoints del dashboard pueden no estar disponibles todavía.</small>
+        </div>
+      )}
 
       {loading ? (
-        <p>Cargando...</p>
+        <div className="loading">Cargando datos del dashboard...</div>
       ) : (
         <>
           {/* === TARJETAS DE ESTADÍSTICAS === */}
           <div className="stats-grid">
             <div className="stat-card">
-              <h3>Usuarios</h3>
+              <h3>👥 Usuarios</h3>
               <p>{stats.totalUsuarios}</p>
             </div>
             <div className="stat-card">
-              <h3>Tarjetas</h3>
+              <h3>🎫 Tarjetas</h3>
               <p>{stats.totalTarjetas}</p>
             </div>
             <div className="stat-card">
-              <h3>Accesos Hoy</h3>
+              <h3>🚪 Accesos Hoy</h3>
               <p>{stats.accesosHoy}</p>
             </div>
             <div className="stat-card">
-              <h3>Personas Dentro</h3>
+              <h3>🏠 Personas Dentro</h3>
               <p>{stats.personasDentro}</p>
             </div>
             <div className="stat-card">
-              <h3>Libros en Préstamo</h3>
+              <h3>📚 Libros en Préstamo</h3>
               <p>{stats.librosPrestados}</p>
             </div>
             <div className="stat-card">
-              <h3>Computadoras Prestadas</h3>
+              <h3>💻 Computadoras Prestadas</h3>
               <p>{stats.computadorasPrestadas}</p>
             </div>
             <div className="stat-card wide">
-              <h3>Última Actividad</h3>
+              <h3>⏰ Última Actividad</h3>
               <p>{stats.ultimaActividad}</p>
             </div>
           </div>
@@ -159,7 +166,7 @@ export default function Dashboard() {
           {/* === TABLA DE ACCESOS === */}
           <div className="table-header">
             <h2 className="table-title">
-              <i className="fa-solid fa-list"></i> Registro de Accesos
+              <i className="fa-solid fa-list"></i> Registro de Accesos de Hoy
             </h2>
             <span className="record-count">{accesos.length} registros</span>
           </div>
@@ -172,27 +179,23 @@ export default function Dashboard() {
                 <table className="access-table">
                   <thead>
                     <tr>
-                      <th>ID</th>
                       <th>Usuario</th>
                       <th>UID</th>
                       <th>Movimiento</th>
-                      <th>Día</th>
+                      <th>Tipo</th>
                       <th>Hora</th>
-                      <th>Timestamp</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {accesos.map((a, i) => (
-                      <tr key={i}>
-                        <td>{a.id_usuario}</td>
-                        <td>{a.nombre_completo || "-"}</td>
-                        <td>{a.uid_tarjeta || "-"}</td>
-                        <td className={`mov-${a.movimiento}`}>
-                          {a.movimiento === "entrada" ? "Entrada" : "Salida"}
+                    {accesos.map((acceso) => (
+                      <tr key={acceso.id_entrada}>
+                        <td>{acceso.nombre_completo || "Sin usuario"}</td>
+                        <td className="uid-cell">{acceso.uid_tarjeta || "-"}</td>
+                        <td className={`mov-${acceso.movimiento}`}>
+                          {acceso.movimiento === "entrada" ? "🟢 Entrada" : "🔴 Salida"}
                         </td>
-                        <td>{a.fecha}</td>
-                        <td>{a.hora}</td>
-                        <td>{`${a.fecha} ${a.hora}`}</td>
+                        <td>{acceso.tipo_uso || "-"}</td>
+                        <td>{acceso.hora || "-"}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -204,7 +207,7 @@ export default function Dashboard() {
       )}
 
       <div className="actions">
-        <button onClick={() => fetchDashboardData(false)}>Actualizar</button>
+        <button onClick={() => fetchDashboardData(true)}>🔄 Actualizar</button>
       </div>
     </div>
   );

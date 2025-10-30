@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api"; // Ajustá si cambia el puerto
+const API_URL = "http://localhost:3000/api";
 
 export const api = {
   // ==========================
@@ -14,7 +14,7 @@ export const api = {
       return res;
     } catch (err) {
       if (err.response && err.response.status === 404) {
-        return { data: null }; // Retorna null si no existe
+        return { data: null };
       }
       throw err;
     }
@@ -35,6 +35,14 @@ export const api = {
   getTurnos: () => axios.get(`${API_URL}/turnos`),
   createTurno: (data) => axios.post(`${API_URL}/turnos`, data),
   updateTurnoEstado: (id, estado) => axios.put(`${API_URL}/turnos/${id}/estado`, { estado }),
+
+  // ==========================
+  // === DASHBOARD ===========
+  // ==========================
+  getAccesosHoy: () => axios.get(`${API_URL}/dashboard/accesos-hoy`),
+  getPersonasDentro: () => axios.get(`${API_URL}/dashboard/personas-dentro`),
+  getUltimaActividad: () => axios.get(`${API_URL}/dashboard/ultima-actividad`),
+  getAccesosHoyDetalle: () => axios.get(`${API_URL}/dashboard/accesos-hoy-detalle`),
 
   // ==========================
   // === COMPUTADORAS =========
@@ -77,9 +85,8 @@ export const api = {
   getUsuariosActivos: () => axios.get(`${API_URL}/entradas/activos`),
   getUltimoUID: () => axios.get(`${API_URL}/uid/ultimo`),
 
-
   // ==========================
-// === UID ==================
-// ==========================
-verificarUID: (uid)=> axios.get(`${API_URL}/uid/verificar/${uid}`),
+  // === UID ==================
+  // ==========================
+  verificarUID: (uid) => axios.get(`${API_URL}/uid/verificar/${uid}`),
 };

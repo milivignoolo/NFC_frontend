@@ -235,3 +235,20 @@
   .actions button {
     width: 100%;
   }}
+
+  .mov-entrada {
+  color: #22c55e;
+  font-weight: bold;
+}
+
+.mov-salida {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.no-records {
+  text-align: center;
+  color: #6b7280;
+  padding: 2rem;
+  font-style: italic;
+}
