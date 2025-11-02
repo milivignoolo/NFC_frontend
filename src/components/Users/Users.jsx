@@ -13,6 +13,9 @@ export default function Usuarios() {
   const [mensaje, setMensaje] = useState("");
   const [tipoMensaje, setTipoMensaje] = useState("");
 
+  const [editandoUID, setEditandoUID] = useState(null); // nuevo
+  const [nuevoUID, setNuevoUID] = useState(""); // nuevo
+
   const [form, setForm] = useState({
     id_usuario: "",
     tipo_usuario: "",
@@ -145,6 +148,25 @@ export default function Usuarios() {
     }
   };
 
+  // 🔹 NUEVA FUNCIÓN reemplazando el prompt()
+  const guardarNuevoUID = async (id_usuario) => {
+    if (!nuevoUID.trim()) {
+      mostrarMensaje("El UID no puede estar vacío.", "error");
+      return;
+    }
+
+    try {
+      await api.updateUser(id_usuario, { uid_tarjeta: nuevoUID });
+      mostrarMensaje("UID actualizado correctamente.", "ok");
+      setEditandoUID(null);
+      setNuevoUID("");
+      fetchAll();
+    } catch (err) {
+      const msg = err.response?.data?.error || err.message || "Error desconocido";
+      mostrarMensaje("Error al actualizar UID: " + msg, "error");
+    }
+  };
+
   const mostrarMensaje = (texto, tipo = "ok") => {
     setMensaje(texto);
     setTipoMensaje(tipo);
@@ -180,33 +202,61 @@ export default function Usuarios() {
       <h1 className="users-title">Gestión de Usuarios</h1>
 
       {mensaje && (
-        <div className={`users-message ${tipoMensaje === "ok" ? "users-message-ok" : "users-message-error"}`}>
+        <div
+          className={`users-message ${
+            tipoMensaje === "ok" ? "users-message-ok" : "users-message-error"
+          }`}
+        >
           {mensaje}
         </div>
       )}
 
-      <section className="users-form-section">
+      {/* ---------- FORMULARIO ---------- */}
+            {/* ---------- FORMULARIO ---------- */}
+            <section className="users-form-section">
         <h2 className="users-form-title">Registrar Usuario</h2>
 
         <form onSubmit={handleSubmit} className="users-form">
           <div className="users-form-group">
             <label>UID de Tarjeta</label>
-            <input name="uid_tarjeta" value={form.uid_tarjeta} onChange={handleChange}placeholder="Ej: 0011223344"></input>
+            <input
+              name="uid_tarjeta"
+              value={form.uid_tarjeta}
+              onChange={handleChange}
+              placeholder="Ej: 0011223344"
+            />
           </div>
 
           <div className="users-form-group">
             <label>DNI</label>
-            <input name="id_usuario" value={form.id_usuario} onChange={handleChange} required  placeholder="Sin puntos ni guiones (Ej: 40900800)"/>
+            <input
+              name="id_usuario"
+              value={form.id_usuario}
+              onChange={handleChange}
+              required
+              placeholder="Sin puntos ni guiones (Ej: 40900800)"
+            />
           </div>
 
           <div className="users-form-group">
             <label>Nombre completo</label>
-            <input name="nombre_completo" value={form.nombre_completo} onChange={handleChange} placeholder="Ej: Juan Pérez"required />
+            <input
+              name="nombre_completo"
+              value={form.nombre_completo}
+              onChange={handleChange}
+              placeholder="Ej: Juan Pérez"
+              required
+            />
           </div>
 
           <div className="users-form-group">
             <label>Tipo de usuario</label>
-            <select name="tipo_usuario" value={form.tipo_usuario} onChange={handleChange} required>
+            <select
+              name="tipo_usuario"
+              value={form.tipo_usuario}
+              onChange={handleChange}
+              required
+            >
               <option value="">Seleccione</option>
               <option value="Aspirante">Aspirante</option>
               <option value="Cursante">Cursante</option>
@@ -221,7 +271,20 @@ export default function Usuarios() {
             <div className="users-form-group users-form-full">
               <label>Carreras</label>
               <div className="users-checkbox-group">
-                {["UTN - Ingeniería en Sistemas de Información", "UTN - Ingeniería Química", "UTN - Ingeniería Electrónica", "UTN - Ingeniería Electromecánica", "UTN - Licenciatura en Administración Rural", "UTN - Ingeniería Industrial", "UTN - Otras", "UCES - Abogacía", "UCES - Licenciatura en Psicología", "UCES - Licenciatura en Recursos Humanos", "UCES - Contador Público", "UCES - Otras"].map((carrera) => (
+                {[
+                  "UTN - Ingeniería en Sistemas de Información",
+                  "UTN - Ingeniería Química",
+                  "UTN - Ingeniería Electrónica",
+                  "UTN - Ingeniería Electromecánica",
+                  "UTN - Licenciatura en Administración Rural",
+                  "UTN - Ingeniería Industrial",
+                  "UTN - Otras",
+                  "UCES - Abogacía",
+                  "UCES - Licenciatura en Psicología",
+                  "UCES - Licenciatura en Recursos Humanos",
+                  "UCES - Contador Público",
+                  "UCES - Otras",
+                ].map((carrera) => (
                   <div key={carrera} className="users-checkbox-item">
                     <input
                       type="checkbox"
@@ -239,32 +302,63 @@ export default function Usuarios() {
 
           <div className="users-form-group">
             <label>Email</label>
-            <input type="email" name="email" value={form.email} onChange={handleChange}placeholder="Ej: Juanjo@gmail.com"/>
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="Ej: Juanjo@gmail.com"
+            />
           </div>
 
           <div className="users-form-group">
             <label>Teléfono</label>
-            <input name="telefono" value={form.telefono} onChange={handleChange} placeholder="Ej: +54 9 351 234 5678" />
+            <input
+              name="telefono"
+              value={form.telefono}
+              onChange={handleChange}
+              placeholder="Ej: +54 9 351 234 5678"
+            />
           </div>
 
           <div className="users-form-group">
             <label>Domicilio</label>
-            <input name="domicilio" value={form.domicilio} onChange={handleChange}placeholder="Ej: Av. Rivadavia 1234" />
+            <input
+              name="domicilio"
+              value={form.domicilio}
+              onChange={handleChange}
+              placeholder="Ej: Av. Rivadavia 1234"
+            />
           </div>
 
           <div className="users-form-group">
             <label>Código postal</label>
-            <input name="codigo_postal" value={form.codigo_postal} onChange={handleChange}  placeholder="Ej: 1000"/>
+            <input
+              name="codigo_postal"
+              value={form.codigo_postal}
+              onChange={handleChange}
+              placeholder="Ej: 1000"
+            />
           </div>
 
           <div className="users-form-group">
             <label>Ciudad</label>
-            <input name="ciudad" value={form.ciudad} onChange={handleChange}placeholder="Ej: Córdoba" />
+            <input
+              name="ciudad"
+              value={form.ciudad}
+              onChange={handleChange}
+              placeholder="Ej: Córdoba"
+            />
           </div>
 
           <div className="users-form-group">
             <label>Provincia</label>
-            <input name="provincia" value={form.provincia} onChange={handleChange} placeholder="Ej: Buenos Aires"/>
+            <input
+              name="provincia"
+              value={form.provincia}
+              onChange={handleChange}
+              placeholder="Ej: Buenos Aires"
+            />
           </div>
 
           <div className="users-form-group">
@@ -291,13 +385,25 @@ export default function Usuarios() {
 
           <div className="users-form-group">
             <label>Contraseña</label>
-            <input type="password" name="contrasena" value={form.contrasena} onChange={handleChange} required placeholder="Mínimo 8 caracteres"/>
+            <input
+              type="password"
+              name="contrasena"
+              value={form.contrasena}
+              onChange={handleChange}
+              required
+              placeholder="Mínimo 8 caracteres"
+            />
           </div>
 
           {(form.tipo_usuario === "Cursante" || form.tipo_usuario === "Docente") && (
             <div className="users-form-group">
               <label>Legajo</label>
-              <input name="legajo" value={form.legajo} onChange={handleChange} placeholder="Ej: 12567" />
+              <input
+                name="legajo"
+                value={form.legajo}
+                onChange={handleChange}
+                placeholder="Ej: 12567"
+              />
             </div>
           )}
 
@@ -305,21 +411,23 @@ export default function Usuarios() {
             <div className="users-form-group users-form-full">
               <label>Materias</label>
               <div className="users-checkbox-group">
-                {["Programación I",
-  "Base de Datos",
-  "Matemática",
-  "Física I",
-  "Química General",
-  "Electrónica Básica",
-  "Termodinámica",
-  "Mecánica de Fluidos",
-  "Circuitos Eléctricos",
-  "Ingeniería de Materiales",
-  "Estadística",
-  "Estructuras",
-  "Control Automático",
-  "Sistemas Operativos",
-  "Diseño de Procesos"].map((materia) => (
+                {[
+                  "Programación I",
+                  "Base de Datos",
+                  "Matemática",
+                  "Física I",
+                  "Química General",
+                  "Electrónica Básica",
+                  "Termodinámica",
+                  "Mecánica de Fluidos",
+                  "Circuitos Eléctricos",
+                  "Ingeniería de Materiales",
+                  "Estadística",
+                  "Estructuras",
+                  "Control Automático",
+                  "Sistemas Operativos",
+                  "Diseño de Procesos",
+                ].map((materia) => (
                   <div key={materia} className="users-checkbox-item">
                     <input
                       type="checkbox"
@@ -346,6 +454,7 @@ export default function Usuarios() {
         </form>
       </section>
 
+      {/* ---------- TABLA ---------- */}
       <section className="users-table-section">
         <h2>Usuarios Registrados</h2>
 
@@ -364,6 +473,7 @@ export default function Usuarios() {
               <th>Nombre</th>
               <th>Tipo</th>
               <th>Legajo</th>
+              <th>UID Tarjeta</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -374,16 +484,72 @@ export default function Usuarios() {
                 <td>{user.nombre_completo}</td>
                 <td>{user.tipo_usuario}</td>
                 <td>{user.legajo || "-"}</td>
+
+                {/* 🔹 Campo editable de UID */}
                 <td>
-                  <button className="users-btn-delete" onClick={() => eliminarUsuario(user.id_usuario)}>
-                    Eliminar
-                  </button>
+                  {editandoUID === user.id_usuario ? (
+                    <div style={{ display: "flex", gap: "6px", justifyContent: "center" }}>
+                      <input
+                        type="text"
+                        value={nuevoUID}
+                        onChange={(e) => setNuevoUID(e.target.value)}
+                        placeholder="Nuevo UID..."
+                        style={{
+                          padding: "5px",
+                          border: "1px solid #ccc",
+                          borderRadius: "4px",
+                          width: "120px",
+                          textAlign: "center",
+                        }}
+                      />
+                      <button
+                        className="users-btn-save"
+                        onClick={() => guardarNuevoUID(user.id_usuario)}
+                      >
+                        ✔
+                      </button>
+                      <button
+                        className="users-btn-cancel"
+                        onClick={() => {
+                          setEditandoUID(null);
+                          setNuevoUID("");
+                        }}
+                      >
+                        ✖
+                      </button>
+                    </div>
+                  ) : (
+                    user.uid_tarjeta || "-"
+                  )}
+                </td>
+
+                <td>
+                  {editandoUID === user.id_usuario ? null : (
+                    <>
+                      <button
+                        className="users-btn-update"
+                        onClick={() => {
+                          setEditandoUID(user.id_usuario);
+                          setNuevoUID(user.uid_tarjeta || "");
+                        }}
+                        style={{ marginRight: "5px" }}
+                      >
+                        Editar UID
+                      </button>
+                      <button
+                        className="users-btn-delete"
+                        onClick={() => eliminarUsuario(user.id_usuario)}
+                      >
+                        Eliminar
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}
             {filteredUsers.length === 0 && (
               <tr>
-                <td colSpan="5" style={{ textAlign: "center" }}>
+                <td colSpan="6" style={{ textAlign: "center" }}>
                   No se encontraron usuarios.
                 </td>
               </tr>

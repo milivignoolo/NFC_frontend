@@ -58,23 +58,53 @@ export default function UIDChecker() {
       .catch(() => setCopiadoID(false));
   };
 
-  const renderInfo = (info) => (
-    <ul className="uid-info-list">
-      {Object.entries(info).map(([key, value]) => (
-        <li key={key}>
-          <strong>{key}:</strong>{" "}
-          {Array.isArray(value)
-            ? value.join(", ")
-            : typeof value === "object" && value !== null
-            ? renderInfo(value)
-            : value || "-"}
-        </li>
-      ))}
-    </ul>
-  );
+  const renderInfo = (info) => {
+    const entries = Object.entries(info).filter(([_, value]) => {
+      if (value === null || value === undefined) return false;
+      if ((Array.isArray(value) && value.length === 0) || value === "[]") return false;
+      if (typeof value === "object" && Object.keys(value).length === 0) return false;
+      if (typeof value === "string" && value.trim() === "") return false;
+      return true;
+    });
+
+    if (entries.length === 0) return null;
+
+    return (
+      <div className="uid-info-grid">
+        {entries.map(([key, value]) => {
+          let formattedValue = value;
+
+          // Intentar parsear JSON si es un string
+          if (typeof value === "string") {
+            try {
+              const temp = JSON.parse(value);
+              if (Array.isArray(temp)) formattedValue = temp;
+            } catch { /* no es JSON, queda tal cual */ }
+          }
+
+          if (Array.isArray(formattedValue)) {
+            formattedValue = formattedValue.join(", ");
+          } else if (typeof formattedValue === "object" && formattedValue !== null) {
+            formattedValue = renderInfo(formattedValue);
+          }
+
+          if (!formattedValue || formattedValue === "[]" || formattedValue === "{}") return null;
+
+          return (
+            <div key={key} className="uid-info-item">
+              <span className="uid-info-key">
+                {key.charAt(0).toUpperCase() + key.slice(1)}:
+              </span>
+              <span className="uid-info-value">{formattedValue}</span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
   useEffect(() => {
-    obtenerYVerificarUID(); 
+    obtenerYVerificarUID();
 
     const ws = new WebSocket("ws://localhost:3000");
 
@@ -98,7 +128,7 @@ export default function UIDChecker() {
 
   return (
     <div className="uid-container">
-      <h2 className="uid-title">UID Checker</h2>
+      <h2 className="uid-title">Verificador de UID</h2>
 
       {cargando ? (
         <p className="uid-loading">Cargando...</p>

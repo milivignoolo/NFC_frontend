@@ -26,7 +26,7 @@ export default function Tabs({ onSelectTab }) {
             { id: "dashboard", label: "Dashboard" },
             { id: "users", label: "Usuarios" },
             { id: "libros", label: "Libros" },
-            { id: "uid", label: "UID Checker" },
+            { id: "uid", label: "Verificador de UID" },
             { id: "computadoras", label: "Computadoras" },
             { id: "operadores", label: "Operadores"},
             { id: "turnos", label: "Turnos"},

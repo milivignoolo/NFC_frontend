@@ -1,115 +1,166 @@
 /* ============================= */
-/*      CONTENEDOR PRINCIPAL     */
+/* CONTENEDOR GENERAL */
 /* ============================= */
 .uid-container {
-    max-width: 500px;
-    margin: 2rem auto; /* centra horizontalmente */
-    padding: 1.5rem 2rem;
-    border: 1px solid var(--azul-borde);
-    border-radius: 12px;
-    background-color: white;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  /* ============================= */
-  /*            TITULO             */
-  /* ============================= */
-  .uid-title {
-    font-size: 1.8rem;
-    color: var(--azul-principal);
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  
-  /* ============================= */
-  /*        MENSAJES/ESTADOS       */
-  /* ============================= */
-  .uid-loading,
-  .uid-empty,
-  .uid-free {
-    font-style: italic;
-    color: var(--azul-texto);
-    text-align: center;
-  }
-  
-  .uid-content {
-    margin-bottom: 1rem;
-  }
-  
-  .uid-last {
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-  
-  /* ============================= */
-  /*          DETALLES             */
-  /* ============================= */
-  .uid-details {
-    margin-top: 1rem;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--azul-borde);
-    border-radius: 8px;
-    background-color: var(--azul-muy-claro);
-  }
-  
-  .uid-subtitle {
-    margin-bottom: 0.5rem;
-    color: var(--azul-secundario);
-    font-weight: 500;
-  }
-  
-  .uid-info-list {
-    list-style: none;
-    padding-left: 0;
-    margin-bottom: 0.5rem;
-  }
-  
-  .uid-info-list li {
-    margin-bottom: 0.25rem;
-    word-break: break-word;
-  }
-  
-  /* ============================= */
-  /*            BOTONES            */
-  /* ============================= */
-  .uid-btn {
-    padding: 0.4rem 0.8rem;
-    border: 2px solid var(--azul-principal);
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    margin-top: 0.3rem;
-    transition: all 0.3s ease;
-    background-color: white;
-    color: var(--azul-principal);
-  }
-  
-  .uid-btn:hover {
-    background-color: var(--azul-muy-claro);
-    border-color: var(--azul-secundario);
-  }
-  
-  .uid-btn-copy,
-  .uid-btn-copy-id {
-    background-color: var(--azul-acento);
-    color: white;
-    border-color: var(--azul-acento);
-  }
-  
-  .uid-btn-copy:hover,
-  .uid-btn-copy-id:hover {
-    background-color: var(--azul-hover);
-    border-color: var(--azul-hover);
-  }
-  
-  .uid-btn-refresh {
-    display: block;
-    margin: 1rem auto 0 auto;
-    width: fit-content;
-  }
-  
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  font-family: 'Inter', sans-serif;
+}
+
+.uid-title {
+  text-align: center;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--azul-principal);
+  margin-bottom: 1.5rem;
+}
+
+/* ============================= */
+/* TARJETA PRINCIPAL */
+/* ============================= */
+.uid-card {
+  border: 1px solid var(--azul-borde);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  background-color: #f8faff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Encabezado UID */
+.uid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.uid-last {
+  font-size: 1.05rem;
+  color: var(--azul-principal);
+  margin: 0;
+}
+
+/* ============================= */
+/* ESTADOS Y MENSAJES */
+/* ============================= */
+.uid-loading,
+.uid-empty,
+.uid-free {
+  text-align: center;
+  color: var(--azul-secundario);
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+/* ============================= */
+/* DETALLES E INFO */
+/* ============================= */
+.uid-details {
+  margin-top: 1rem;
+  border-radius: 10px;
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid var(--azul-borde);
+}
+
+.uid-badge {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 0.8rem;
+}
+
+.uid-badge-usuario {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+}
+.uid-badge-libro {
+  background-color: #ede7f6;
+  color: #4a148c;
+}
+.uid-badge-computadora {
+  background-color: #e8f5e9;
+  color: #1b5e20;
+}
+
+/* Info organizada en cuadrícula */
+.uid-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.5rem 1rem;
+}
+
+.uid-info-item {
+  background: #f6f9fc;
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+}
+
+.uid-info-key {
+  font-weight: 600;
+  color: var(--azul-principal);
+  display: block;
+}
+
+.uid-info-value {
+  color: #333;
+  font-size: 0.9rem;
+  word-wrap: break-word;
+}
+
+/* ============================= */
+/* BOTONES */
+/* ============================= */
+.uid-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  border: 2px solid transparent;
+}
+
+.uid-btn-copy {
+  background-color: var(--azul-acento);
+  color: white;
+}
+
+.uid-btn-copy:hover {
+  background-color: var(--azul-hover);
+}
+
+.uid-btn-copy-id {
+  background-color: #2196f3;
+  color: white;
+  margin-top: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.uid-btn-copy-id:hover {
+  background-color: #1976d2;
+}
+
+.uid-btn-refresh {
+  margin: 1.5rem auto 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background-color: white;
+  color: var(--azul-principal);
+  border: 2px solid var(--azul-principal);
+}
+
+.uid-btn-refresh:hover {
+  background-color: var(--azul-muy-claro);
+}
