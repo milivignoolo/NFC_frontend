@@ -207,7 +207,7 @@ export default function Dashboard() {
       )}
 
       <div className="actions">
-        <button onClick={() => fetchDashboardData(true)}>🔄 Actualizar</button>
+        <button onClick={() => fetchDashboardData(true)}>Actualizar</button>
       </div>
     </div>
   );
