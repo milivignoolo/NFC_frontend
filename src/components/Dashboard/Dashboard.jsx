@@ -191,8 +191,8 @@ export default function Dashboard() {
                       <tr key={acceso.id_entrada}>
                         <td>{acceso.nombre_completo || "Sin usuario"}</td>
                         <td className="uid-cell">{acceso.uid_tarjeta || "-"}</td>
-                        <td className={`mov-${acceso.movimiento}`}>
-                          {acceso.movimiento === "entrada" ? "🟢 Entrada" : "🔴 Salida"}
+                        <td className={`mov-${acceso.movimiento}|| "sin-accion" `}>
+                          {acceso.movimiento === "entrada" ? "🟢 Entrada" : acceso.movimiento === "salida" ? "🔴 Salida" : "—"}
                         </td>
                         <td>{acceso.tipo_uso || "-"}</td>
                         <td>{acceso.hora || "-"}</td>
