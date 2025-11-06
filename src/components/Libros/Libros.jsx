@@ -101,6 +101,16 @@ export default function Libros() {
       <section className="libros-section">
   <h2 className="libros-section-title">Registrar nuevo libro</h2>
   <form onSubmit={handleRegistrarLibro} className="libros-form">
+    
+    <div className="libros-form-group">
+      <label>UID etiqueta</label>
+      <input 
+        type="text" 
+        value={formLibro.uid_tarjeta} 
+        onChange={e => setFormLibro({ ...formLibro, uid_tarjeta: e.target.value })} 
+      placeholder="Ej: 0011223344"
+      />
+    </div>
 
     <div className="libros-form-group">
       <label>Título</label>
@@ -120,17 +130,6 @@ export default function Libros() {
         value={formLibro.sub_titulo} 
         onChange={e => setFormLibro({ ...formLibro, sub_titulo: e.target.value })} 
       placeholder="Ej: Fundamentos y prácticas con Python"
-      />
-    </div>
-
-    <div className="libros-form-group">
-      <label>Asignatura</label>
-      <input 
-        type="text" 
-        value={formLibro.asignatura} 
-        onChange={e => setFormLibro({ ...formLibro, asignatura: e.target.value })} 
-        required
-        placeholder="Ej: Algoritmos y Estructuras de Datos"
       />
     </div>
 
@@ -182,6 +181,17 @@ export default function Libros() {
         value={formLibro.serie} 
         onChange={e => setFormLibro({ ...formLibro, serie: e.target.value })} 
       placeholder="Ej: Serie Informática UTN"
+      />
+    </div>
+
+    <div className="libros-form-group">
+      <label>Asignatura</label>
+      <input 
+        type="text" 
+        value={formLibro.asignatura} 
+        onChange={e => setFormLibro({ ...formLibro, asignatura: e.target.value })} 
+        required
+        placeholder="Ej: Algoritmos y Estructuras de Datos"
       />
     </div>
 
@@ -327,16 +337,6 @@ export default function Libros() {
         <option value="reservado">RESERVADO</option>
         <option value="en_prestamo">EN PRÉSTAMO</option>
       </select>
-    </div>
-
-    <div className="libros-form-group">
-      <label>UID etiqueta</label>
-      <input 
-        type="text" 
-        value={formLibro.uid_tarjeta} 
-        onChange={e => setFormLibro({ ...formLibro, uid_tarjeta: e.target.value })} 
-      placeholder="Ej: 0011223344"
-      />
     </div>
 
     <div className="libros-form-actions">
